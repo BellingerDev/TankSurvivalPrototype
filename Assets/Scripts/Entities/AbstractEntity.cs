@@ -27,9 +27,9 @@ namespace iLogos.TankSurvival
 			_health -= otherEntity.Damage * otherEntity.Defence;
 		}
 
-		public virtual void ObtainDamage(Bullet bullet)
+		public virtual void ObtainDamage(AbstractBullet bullet)
 		{
-			_health -= bullet.Damage / Defence;
+			_health -= bullet.ReceiveDamage() / Defence;
 		}
 
 		public virtual void Move(Vector3 position)
