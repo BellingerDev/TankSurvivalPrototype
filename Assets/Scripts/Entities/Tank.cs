@@ -25,14 +25,23 @@ namespace iLogos.TankSurvival
                 _activeWeapon.Shot();
         }
 
-        public void SwitchWeapon<T>() where T : AbstractWeapon
-        {
-            _activeWeapon = _availableWeapon.FindLast(w => w is T);
-        }
-
         public void SwitchWeapon(AbstractWeapon weapon)
         {
             _activeWeapon = weapon;
+        }
+
+        public void SwitchNextWeapon()
+        {
+            int index = _availableWeapon.IndexOf(_activeWeapon);
+            if (++index < _availableWeapon.Count)
+                SwitchWeapon(_availableWeapon[index]);
+        }
+
+        public void SwitchPrevWeapon()
+        {
+            int index = _availableWeapon.IndexOf(_activeWeapon);
+            if (--index >= 0)
+                SwitchWeapon(_availableWeapon[index]);
         }
 
         public void AddWeapon(AbstractWeapon weapon)
