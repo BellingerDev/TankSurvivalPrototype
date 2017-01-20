@@ -3,7 +3,7 @@
 
 namespace iLogos.TankSurvival
 {
-	public class GamePresenter : AbstractPresenter
+	public sealed class GamePresenter : AbstractPresenter
 	{
 		[SerializeField]
 		private GameObject _mainMenuPanel;

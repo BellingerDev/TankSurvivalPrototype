@@ -41,7 +41,7 @@ namespace iLogos.TankSurvival
 		{
 			Vector3 newPosition = this.transform.position;
 
-			if (Vector3.Distance(newPosition, _velocity) > _positionAccuracy)
+			if (Vector3.Distance(newPosition, _velocity) >= _positionAccuracy)
 				newPosition = Vector3.Lerp(newPosition, _velocity, Time.deltaTime * _moveSpeed);
 
 			this.transform.position = newPosition;

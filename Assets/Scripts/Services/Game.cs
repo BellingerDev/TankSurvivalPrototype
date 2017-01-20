@@ -16,6 +16,9 @@ namespace iLogos.TankSurvival
 		[SerializeField]
 		private GameBalance _balance;
 
+		[SerializeField]
+		private string _saveName;
+
 		private GameProgress _progress;
 		private AbstractGameState _activeState;
 
@@ -29,7 +32,7 @@ namespace iLogos.TankSurvival
 		{
 			base.Awake();
 
-			_progress = new GameProgress();
+			LoadProgress();
 
 			_tankFactory = FindObjectOfType<TankFactory>();
 			_monsterFactory = FindObjectOfType<MonsterFactory>();
@@ -41,6 +44,13 @@ namespace iLogos.TankSurvival
 		{
 			if (_activeState != null)
 				_activeState.Update();
+		}
+
+		protected override void OnDestroy()
+		{
+			base.OnDestroy();
+
+			SaveProgress();
 		}
 
 		public void SwitchState(AbstractGameState newState)
@@ -60,6 +70,24 @@ namespace iLogos.TankSurvival
 				OnStateChangedToGameOverEvent();
 
 			_activeState.Prepare();
+		}
+
+		private void LoadProgress()
+		{
+			string saveString = PlayerPrefs.GetString(_saveName);
+			if (String.IsNullOrEmpty(saveString))
+			{
+				_progress = new GameProgress();
+			}
+			else
+			{
+				_progress = JsonUtility.FromJson<GameProgress>(saveString);
+			}
+		}
+
+		private void SaveProgress()
+		{
+			PlayerPrefs.SetString(_saveName, JsonUtility.ToJson(_progress));
 		}
 
 		private void OnDrawGizmos()

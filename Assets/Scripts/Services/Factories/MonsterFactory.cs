@@ -9,18 +9,13 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private GameObject _monsterPrototype;
 
-        private GameBalance _balance;
-
         private List<Monster> _spawnedMonsters = new List<Monster>();
 
 
-        private void Awake()
-        {
-            _balance = Game.Instance.Balance;
-        }
-
         public void SpawnMonsterAtRandomPosition()
         {
+            GameBalance _balance = Game.Instance.Balance;
+
             Vector3 randomPosition = _balance.GetRandomArenaPosition();
             float randomPositionDistance = randomPosition.magnitude;
             float maxDistance = _balance.ArenaSize.magnitude;
@@ -31,6 +26,8 @@ namespace iLogos.TankSurvival
 
         public void SpawnLevelMonsters()
         {
+            GameBalance _balance = Game.Instance.Balance;
+            
             for (int i = 0; i < _balance.MaxMonstersOnScene; i ++)
             {
                 SpawnMonsterAtRandomPosition();

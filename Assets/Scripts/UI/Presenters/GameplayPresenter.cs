@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace iLogos.TankSurvival
@@ -17,6 +18,25 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private TankSwitchWeaponCommand _switchWeaponCommand;
 
+        [SerializeField]
+        private Text _destroyedEnemiesCounter;
+
+
+        private void Awake()
+        {
+            GameProgress.OnTotalDestroyedMonstersChangedEvent += UpdateEnemiesCounter;
+            _destroyedEnemiesCounter.text = Game.Instance.Progress.TotalDestroyedMonsters.ToString();
+        }
+
+        private void OnDestroy()
+        {
+            GameProgress.OnTotalDestroyedMonstersChangedEvent -= UpdateEnemiesCounter;
+        }
+
+        private void UpdateEnemiesCounter()
+        {
+            _destroyedEnemiesCounter.text = Game.Instance.Progress.TotalDestroyedMonsters.ToString();
+        }
 
         private void Update()
         {
