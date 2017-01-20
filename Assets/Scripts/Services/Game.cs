@@ -10,6 +10,8 @@ namespace iLogos.TankSurvival
 		public static event Action OnStateChangedToGameplayEvent = delegate { };
 		public static event Action OnStateChangedToGameOverEvent = delegate { };
 
+		public static event Action OnActiveTankChangedEvent = delegate { };
+
 
 		[SerializeField]
 		private GameBalance _balance;
@@ -19,6 +21,8 @@ namespace iLogos.TankSurvival
 
 		private TankFactory _tankFactory;
 		private MonsterFactory _monsterFactory;
+
+		private Tank _activeTank;
 
 
 		protected override void Awake()
@@ -82,6 +86,16 @@ namespace iLogos.TankSurvival
 		public MonsterFactory MonsterFactory
 		{
 			get { return _monsterFactory; }
+		}
+
+		public Tank ActiveTank
+		{
+			get { return _activeTank; }
+			set
+			{
+				_activeTank = value;
+				OnActiveTankChangedEvent();
+			}
 		}
 	}
 }

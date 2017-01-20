@@ -54,6 +54,8 @@ namespace iLogos.TankSurvival
 			Gizmos.DrawRay(this.transform.position, this.transform.forward);
 		}
 
+		public abstract void DestroyInstance();
+
 		public float Health
 		{
 			get { return _health; }

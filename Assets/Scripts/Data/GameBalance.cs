@@ -13,6 +13,11 @@ namespace iLogos.TankSurvival
         private int _maxMonstersOnScene;
 
 
+        public Vector3 GetRandomArenaPosition()
+        {
+            return new Vector3(Random.Range(-_arenaSize.x, _arenaSize.x), 0, Random.Range(-_arenaSize.y, _arenaSize.y));
+        }
+
         public Vector2 ArenaSize
         {
             get { return _arenaSize; }

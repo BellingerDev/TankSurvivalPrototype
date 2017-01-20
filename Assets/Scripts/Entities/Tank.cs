@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace iLogos.TankSurvival
 {
     public class Tank : AbstractEntity
     {
+        public static event Action OnDestroyedEvent = delegate { };
+        
         [SerializeField]
         private Transform _headTransform;
 
@@ -43,6 +46,15 @@ namespace iLogos.TankSurvival
         public void MoveHead(Vector3 position)
         {
             _headTransform.LookAt(position);
+        }
+
+        public override void DestroyInstance()
+        {
+            this.gameObject.SetActive(false);
+
+            OnDestroyedEvent();
+
+            Destroy(this.gameObject);
         }
 
         public IEnumerable<AbstractWeapon> AvailableWeapon
