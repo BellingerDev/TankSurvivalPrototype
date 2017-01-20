@@ -9,6 +9,7 @@ namespace iLogos.TankSurvival
 		protected float _health;
 
 		[SerializeField]
+		[RangeAttribute(0, 1)]
 		protected float _defence;
 
 		[SerializeField]
@@ -44,6 +45,13 @@ namespace iLogos.TankSurvival
 				newPosition = Vector3.Lerp(newPosition, _velocity, Time.deltaTime * _moveSpeed);
 
 			this.transform.position = newPosition;
+		}
+
+		protected virtual void OnDrawGizmos()
+		{
+			Gizmos.color = Color.red;
+			Gizmos.DrawSphere(this.transform.position, 0.3f);
+			Gizmos.DrawRay(this.transform.position, this.transform.forward);
 		}
 
 		public float Health
