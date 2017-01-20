@@ -32,6 +32,7 @@ namespace iLogos.TankSurvival
 
         protected override void Awake()
         {
+            base.Awake();
             _weapon = GetComponent<WeaponController>();
         }
 
@@ -53,6 +54,17 @@ namespace iLogos.TankSurvival
         }
 
         #endregion
+
+        public override void ObtainDamage(AbstractEntity otherEntity)
+        {
+            base.ObtainDamage(otherEntity);
+            otherEntity.DestroyInstance();
+        }
+
+        public override void ObtainDamage(AbstractBullet bullet)
+        {
+            
+        }
 
         public override void DestroyInstance()
         {

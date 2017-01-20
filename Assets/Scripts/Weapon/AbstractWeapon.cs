@@ -9,25 +9,21 @@ namespace iLogos.TankSurvival
         private GameObject _bulletPrototype;
 
         [SerializeField]
-        private float _fireRate;
+        private float _reloadTime;
 
         [SerializeField]
         private float _damage;
 
-        private float _reloadTime;
+        private float _endReloadTime;
 
          
         public virtual void Shot()
         {
-            if (Time.time > _reloadTime)
+            if (Time.time > _endReloadTime)
             {
                 ShotBulletAtLocation(_bulletPrototype, _damage);
-                _reloadTime = Time.time + _fireRate;
-
-                Debug.Log("Fire");  
+                _endReloadTime = Time.time + _reloadTime;
             }
-            else
-                Debug.Log("Weapon is reloading");  
         }
 
         protected abstract void ShotBulletAtLocation(GameObject prototype, float damage);

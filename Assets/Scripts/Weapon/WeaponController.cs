@@ -17,8 +17,6 @@ namespace iLogos.TankSurvival
         {
             if (_activeWeapon != null)
                 _activeWeapon.Shot();
-            else
-                Debug.Log("Active Weapon Is Null");
         }
 
         public void SwitchWeapon(AbstractWeapon weapon)

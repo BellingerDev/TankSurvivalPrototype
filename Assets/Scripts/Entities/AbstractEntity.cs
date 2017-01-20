@@ -15,22 +15,45 @@ namespace iLogos.TankSurvival
 		[SerializeField]
 		protected float _damage;
 
+		public float CurrentHealth { get; private set; }
+
 
 		#region MonoBehaviour Callbacks
 
-		protected abstract void Awake();
+		protected virtual void Awake()
+		{
+			CurrentHealth = Health;
+		}
+
 		protected abstract void Update();
+
+		private void OnTriggerEnter(Collider col)
+		{
+			AbstractEntity entity = col.GetComponent<AbstractEntity>();
+			if (entity != null)
+				ObtainDamage(entity);
+
+			AbstractBullet bullet = col.GetComponent<AbstractBullet>();
+			if (bullet != null)
+				ObtainDamage(bullet);
+		}
 
 		#endregion
 
 		public virtual void ObtainDamage(AbstractEntity otherEntity)
 		{
-			_health -= otherEntity.Damage * otherEntity.Defence;
+			CurrentHealth -= otherEntity.Damage * otherEntity.Defence;
+
+			if (CurrentHealth <= 0)
+				DestroyInstance();
 		}
 
 		public virtual void ObtainDamage(AbstractBullet bullet)
 		{
-			_health -= bullet.ReceiveDamage() / Defence;
+			CurrentHealth -= bullet.ReceiveDamage() / Defence;
+
+			if (CurrentHealth <= 0)
+				DestroyInstance();
 		}
 
 		protected virtual void OnDrawGizmos()
