@@ -12,14 +12,24 @@ namespace iLogos.TankSurvival
         private Tank _tank;
 
 
-        private void Awake()
+        private void Start()
         {
             _tank = GetComponent<Tank>();
 
             foreach (var weapon in _weaponToDispatch)
-                _tank.AddWeapon(weapon.GetComponent<AbstractWeapon>());
+                _tank.Weapon.AddWeapon(CreateWeaponInstance(weapon));    
 
-            
+            _tank.Weapon.SwitchNextWeapon();       
+        }
+
+        private AbstractWeapon CreateWeaponInstance(GameObject weapon)
+        {
+            GameObject instance = Instantiate<GameObject>(weapon, Vector3.zero, Quaternion.identity);
+
+            instance.transform.SetParent(this.transform);
+            instance.SetActive(true);
+
+            return instance.GetComponent<AbstractWeapon>();
         }
     }
 }

@@ -15,12 +15,13 @@ namespace iLogos.TankSurvival
 		[SerializeField]
 		protected float _damage;
 
-		[SerializeField]
-		protected float _moveSpeed;
 
-		private float _positionAccuracy = 0.1f;
-		private Vector3 _velocity;
+		#region MonoBehaviour Callbacks
 
+		protected abstract void Awake();
+		protected abstract void Update();
+
+		#endregion
 
 		public virtual void ObtainDamage(AbstractEntity otherEntity)
 		{
@@ -30,21 +31,6 @@ namespace iLogos.TankSurvival
 		public virtual void ObtainDamage(AbstractBullet bullet)
 		{
 			_health -= bullet.ReceiveDamage() / Defence;
-		}
-
-		public virtual void Move(Vector3 position)
-		{
-			_velocity = position;
-		}
-
-		protected virtual void Update()
-		{
-			Vector3 newPosition = this.transform.position;
-
-			if (Vector3.Distance(newPosition, _velocity) >= _positionAccuracy)
-				newPosition = Vector3.Lerp(newPosition, _velocity, Time.deltaTime * _moveSpeed);
-
-			this.transform.position = newPosition;
 		}
 
 		protected virtual void OnDrawGizmos()
@@ -69,16 +55,6 @@ namespace iLogos.TankSurvival
 		public float Damage
 		{
 			get { return _damage; }
-		}
-
-		public float MoveSpeed
-		{
-			get { return _moveSpeed; }
-		}
-
-		public Vector3 Velocity
-		{
-			get { return _velocity; }
 		}
 	}
 }

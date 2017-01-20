@@ -21,7 +21,7 @@ namespace iLogos.TankSurvival
             float maxDistance = _balance.ArenaSize.magnitude;
 
             Monster monster = CreateInstance<Monster>(_monsterPrototype);
-            monster.transform.position = randomPosition * (maxDistance - randomPositionDistance);
+            monster.transform.position = randomPosition;
         }
 
         public void SpawnLevelMonsters()

@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 
 namespace iLogos.TankSurvival
@@ -6,6 +7,31 @@ namespace iLogos.TankSurvival
     public class Monster : AbstractEntity
     {
         public static event Action OnDestroyedEvent = delegate { };
+
+        [SerializeField]
+        private float _moveSpeed;
+
+
+        #region MonoBehaviour Callbacks
+
+        protected override void Awake()
+        {
+
+        }
+
+        protected override void Update()
+        {
+            Vector3 position = this.transform.position;
+            Vector3 tankPosition = Game.Instance.ActiveTank.transform.position;
+
+            position = Vector3.MoveTowards(position, tankPosition, Time.deltaTime * _moveSpeed);
+
+
+            this.transform.position = position;
+            this.transform.LookAt(tankPosition);
+        }
+
+        #endregion
 
         public override void DestroyInstance()
         {

@@ -49,7 +49,7 @@ namespace iLogos.TankSurvival
                 _aimCommand.Execute(tank);
 
             if (_fireCommand.IsHandle())
-                _aimCommand.Execute(tank);
+                _fireCommand.Execute(tank);
 
             if (_switchWeaponCommand.IsHandle())
                 _switchWeaponCommand.Execute(tank);

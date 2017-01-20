@@ -14,14 +14,21 @@ namespace iLogos.TankSurvival
 
         public override bool IsHandle()
         {
-            _aimPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 pos = Input.mousePosition;
+            pos.z = Camera.main.nearClipPlane;
+
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(pos);
+
+            worldPos.y = 0;
+
+            _aimPosition = worldPos;
 
             return true;
         }
 
         public override void Execute(Tank tank)
         {
-            tank.MoveHead(_aimPosition);
+            tank.HeadAngularVelocity = Quaternion.LookRotation(_aimPosition);
         }
     }
 }

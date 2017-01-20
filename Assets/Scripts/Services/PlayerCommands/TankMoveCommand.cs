@@ -10,56 +10,48 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private KeyCode _leftKey;
         
-        
         [SerializeField]
         private KeyCode _rightKey;
 
-        
         [SerializeField]
         private KeyCode _topKey;
-
         
         [SerializeField]
         private KeyCode _bottomKey;
 
-        private Vector3 _velocity;
+        private float _linearVelocity;
+        private Quaternion _angularVelocity;
 
 
         public override bool IsHandle()
         {
-            bool isHandle = false;
-            _velocity = Vector3.zero;
-
+            // calculate rotation
             if (Input.GetKeyDown(_leftKey))
-            {
-                _velocity += Vector3.left;
-                isHandle = true;
-            }
-
+                _angularVelocity *= Quaternion.Euler(Vector3.down);
+            
             if (Input.GetKeyDown(_rightKey))
-            {
-                _velocity += Vector3.right;
-                isHandle = true;
-            }
+                _angularVelocity *= Quaternion.Euler(Vector3.up);
 
+            if (Input.GetKeyUp(_leftKey) || Input.GetKeyUp(_rightKey))
+                _angularVelocity = Quaternion.identity;
+
+            // calculate position
             if (Input.GetKeyDown(_topKey))
-            {
-                _velocity += Vector3.forward;
-                isHandle = true;
-            }
+                _linearVelocity = 1.0f;
 
             if (Input.GetKeyDown(_bottomKey))
-            {
-                _velocity += Vector3.back;
-                isHandle = true;
-            }
+                _linearVelocity = -1.0f;
+            
+            if (Input.GetKeyUp(_topKey) || Input.GetKeyUp(_bottomKey))
+                _linearVelocity = 0.0f;
 
-            return isHandle;
+            return true;
         }
 
         public override void Execute(Tank tank)
         {
-            tank.Move(_velocity);
+            tank.LinearVelocity = _linearVelocity;
+            tank.AngularVelocity = _angularVelocity;
         }
     }
 }

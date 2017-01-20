@@ -22,8 +22,12 @@ namespace iLogos.TankSurvival
             if (Time.time > _reloadTime)
             {
                 ShotBulletAtLocation(_bulletPrototype, _damage);
-                _reloadTime = Time.time + _fireRate;   
+                _reloadTime = Time.time + _fireRate;
+
+                Debug.Log("Fire");  
             }
+            else
+                Debug.Log("Weapon is reloading");  
         }
 
         protected abstract void ShotBulletAtLocation(GameObject prototype, float damage);

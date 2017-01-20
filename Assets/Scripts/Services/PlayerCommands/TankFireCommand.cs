@@ -10,15 +10,23 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private KeyCode _fireKey;
 
+        private bool _isFire = false;
+
 
         public override bool IsHandle()
         {
-            return Input.GetKeyDown(_fireKey);
+            if (Input.GetKeyDown(_fireKey))
+                _isFire = true;
+
+            if (Input.GetKeyUp(_fireKey))
+                _isFire = false;
+            
+            return _isFire;
         }
 
         public override void Execute(Tank tank)
         {
-            tank.Fire();
+            tank.Weapon.Fire();
         }
     }
 }

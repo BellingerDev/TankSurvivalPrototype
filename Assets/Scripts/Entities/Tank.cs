@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace iLogos.TankSurvival
 {
+    [RequireComponent(typeof(WeaponController))]
     public class Tank : AbstractEntity
     {
         public static event Action OnDestroyedEvent = delegate { };
@@ -13,49 +13,46 @@ namespace iLogos.TankSurvival
         private Transform _headTransform;
 
         [SerializeField]
-        private WeaponSlot[] _slots;
+        private float _headRotateSpeed;
+        
+        [SerializeField]
+		protected float _moveSpeed;
 
-        private List<AbstractWeapon> _availableWeapon = new List<AbstractWeapon>();
-        private AbstractWeapon _activeWeapon;
+		[SerializeField]
+		private float _rotateSpeed;
+
+        private WeaponController _weapon;
+        
+		public float LinearVelocity { get; set; }
+		public Quaternion AngularVelocity { get; set; }
+        public Quaternion HeadAngularVelocity { get; set; }
 
 
-        public void Fire()
+        #region MonoBehaviour Callbacks
+
+        protected override void Awake()
         {
-            if (_activeWeapon != null)
-                _activeWeapon.Shot();
+            _weapon = GetComponent<WeaponController>();
         }
 
-        public void SwitchWeapon(AbstractWeapon weapon)
+        protected override void Update()
         {
-            _activeWeapon = weapon;
+            Vector3 tankPosition = this.transform.position;
+            Vector3 tankForward = this.transform.forward;
+
+            Quaternion tankRotation = this.transform.rotation;
+            Quaternion tankHeadRotation = _headTransform.rotation;
+
+            tankPosition += tankForward * LinearVelocity * _moveSpeed;
+            tankRotation = Quaternion.Slerp(tankRotation, tankRotation * AngularVelocity, Time.deltaTime * _rotateSpeed);
+            tankHeadRotation = Quaternion.Slerp(tankHeadRotation, HeadAngularVelocity, Time.deltaTime * _headRotateSpeed);
+
+            this.transform.position = tankPosition;
+            this.transform.rotation = tankRotation;
+            _headTransform.rotation = tankHeadRotation;
         }
 
-        public void SwitchNextWeapon()
-        {
-            int index = _availableWeapon.IndexOf(_activeWeapon);
-            if (++index < _availableWeapon.Count)
-                SwitchWeapon(_availableWeapon[index]);
-        }
-
-        public void SwitchPrevWeapon()
-        {
-            int index = _availableWeapon.IndexOf(_activeWeapon);
-            if (--index >= 0)
-                SwitchWeapon(_availableWeapon[index]);
-        }
-
-        public void AddWeapon(AbstractWeapon weapon)
-        {
-            weapon.transform.SetParent(this.transform);
-            weapon.Configure(_slots);
-
-            _availableWeapon.Add(weapon);
-        }
-
-        public void MoveHead(Vector3 position)
-        {
-            _headTransform.LookAt(position);
-        }
+        #endregion
 
         public override void DestroyInstance()
         {
@@ -66,9 +63,9 @@ namespace iLogos.TankSurvival
             Destroy(this.gameObject);
         }
 
-        public IEnumerable<AbstractWeapon> AvailableWeapon
+        public WeaponController Weapon
         {
-            get { return _availableWeapon; }
+            get { return _weapon; }
         }
     }
 }

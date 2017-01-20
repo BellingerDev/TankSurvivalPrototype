@@ -47,11 +47,11 @@ namespace iLogos.TankSurvival
             switch (_direction)
             {
                 case SwitchDirection.Left:
-                    tank.SwitchPrevWeapon();
+                    tank.Weapon.SwitchPrevWeapon();
                     break;
 
                 case SwitchDirection.Right:
-                    tank.SwitchNextWeapon();
+                    tank.Weapon.SwitchNextWeapon();
                     break;
             }
         }
