@@ -17,12 +17,18 @@ namespace iLogos.TankSurvival
 		private GameProgress _progress;
 		private AbstractGameState _activeState;
 
+		private TankFactory _tankFactory;
+		private MonsterFactory _monsterFactory;
+
 
 		protected override void Awake()
 		{
 			base.Awake();
 
 			_progress = new GameProgress();
+
+			_tankFactory = FindObjectOfType<TankFactory>();
+			_monsterFactory = FindObjectOfType<MonsterFactory>();
 
 			SwitchState(new MainMenuState());
 		}
@@ -60,6 +66,16 @@ namespace iLogos.TankSurvival
 		public GameProgress Progress
 		{
 			get { return _progress; }
+		}
+
+		public TankFactory TankFactory
+		{
+			get { return _tankFactory; }
+		}
+
+		public MonsterFactory MonsterFactory
+		{
+			get { return _monsterFactory; }
 		}
 	}
 }
