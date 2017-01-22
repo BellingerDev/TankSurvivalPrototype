@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace iLogos.TankSurvival
@@ -20,6 +21,7 @@ namespace iLogos.TankSurvival
 
 		[SerializeField]
 		private float _rotateSpeed;
+
         
 		public float LinearVelocity { get; set; }
 		public Quaternion AngularVelocity { get; set; }
@@ -50,6 +52,7 @@ namespace iLogos.TankSurvival
 
             this.transform.position = tankPosition;
             this.transform.rotation = tankRotation;
+
             _headTransform.rotation = tankHeadRotation;
         }
 

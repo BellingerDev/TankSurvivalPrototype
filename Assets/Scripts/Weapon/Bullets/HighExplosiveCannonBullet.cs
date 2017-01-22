@@ -13,6 +13,8 @@ namespace iLogos.TankSurvival
 
         public override int ReceiveDamage()
         {
+			Velocity = Vector3.zero;
+
             if (_currentTargetCount <= _maxTargets)
                 _currentTargetCount++;
             else

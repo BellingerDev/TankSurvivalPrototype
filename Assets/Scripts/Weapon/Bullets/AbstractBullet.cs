@@ -6,7 +6,7 @@ namespace iLogos.TankSurvival
     public abstract class AbstractBullet : MonoBehaviour, IPoolable
     {
         public int Damage { get; private set; }
-        public Vector3 Velocity { get; private set; }
+		public Vector3 Velocity { get; protected set; }
 
 
         public void Configure(int damage, Vector3 velocity)

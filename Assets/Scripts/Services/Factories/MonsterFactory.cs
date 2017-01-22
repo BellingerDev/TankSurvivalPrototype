@@ -15,11 +15,10 @@ namespace iLogos.TankSurvival
             GameBalance _balance = Game.Instance.Balance;
 
             Vector3 randomPosition = _balance.GetRandomArenaPosition();
-            float randomPositionDistance = randomPosition.magnitude;
             float maxDistance = _balance.ArenaSize.magnitude;
 
             Monster monster = CreateInstance<Monster>(_monsterPrototype);
-            monster.transform.position = randomPosition;
+			monster.transform.position = randomPosition.normalized * maxDistance;
         }
 
         public void SpawnLevelMonsters()

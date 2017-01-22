@@ -6,12 +6,12 @@ namespace iLogos.TankSurvival
     public class GameplayState : AbstractGameState
     {
         public override void Prepare()
-        {
-            Monster.OnDestroyedEvent += SpawnOneMoreMonster;
-            Tank.OnDestroyedEvent += SwitchStateToGameOver;
-
+		{
 			Game.Instance.TankFactory.ClearFactory ();
 			Game.Instance.MonsterFactory.ClearFactory ();
+
+            Monster.OnDestroyedEvent += SpawnOneMoreMonster;
+            Tank.OnDestroyedEvent += SwitchStateToGameOver;
 
             Tank tank = Game.Instance.TankFactory.SpawnTankAtPosition(Vector3.zero);
             Game.Instance.ActiveTank = tank;
@@ -42,6 +42,7 @@ namespace iLogos.TankSurvival
 
         private void SpawnOneMoreMonster()
         {
+			Game.Instance.Progress.TotalDestroyedMonsters++;
             Game.Instance.MonsterFactory.SpawnMonsterAtRandomPosition();
         }
     }

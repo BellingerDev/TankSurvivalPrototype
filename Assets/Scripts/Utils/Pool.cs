@@ -17,75 +17,53 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private PoolUnit[]          units;
 
-        private List<GameObject>    instances;
+		private List<GameObject> _instances = new List<GameObject> ();
+		private PoolInstanceBuilder _builder = new PoolInstanceBuilder();
 
 
         protected override void Awake()
         {
             base.Awake();
-
 			CreateInstances ();
         }
 
         private void CreateInstances()
         {
-            instances = new List<GameObject>();
-
             foreach (var u in units)
             {
                 for (int i = 0; i < u.count; i++)
                 {
-                    instances.Add(CreateInstance(u.prototype));
+					_builder.SetPrototype (u.prototype)
+							.CreateInstance()
+							.ResetLocation ()
+							.SetParentAndHide (this.transform);
+
+					_instances.Add(_builder.Build());
                 }
             }
         }
 
-        private GameObject CreateInstance(GameObject prototype)
-        {
-            return ResetInstance(Instantiate<GameObject>(prototype));
-        }
-
-        private GameObject ResetInstance(GameObject instance)
-        {
-            instance.transform.SetParent(this.transform);
-
-            instance.transform.localPosition = Vector3.zero;
-            instance.transform.localRotation = Quaternion.identity;
-            instance.SetActive(false);
-
-            return instance;
-        }
-
         public GameObject Get(GameObject prototype)
         {
-            GameObject go = instances.FindLast(i => i.name == prototype.name);
-            if (go != null)
-			{
-				foreach (var poolable in go.GetComponents<IPoolable>())
-					poolable.ResetInstance();
+			_builder.SetPrototype (prototype)
+					.SetInstance (_instances.FindLast (i => i.name == prototype.name))
+					.ResetLocation()
+					.ResetBehaviours ();
 
-                return go;
-			}
+			GameObject instance = _builder.Build ();
 
-            return CreateInstance(prototype);
+			if (_instances.Contains(instance))
+				_instances.Remove (instance);
+
+			return instance;
         }
-
-		public GameObject Get(string id)
-		{
-			GameObject go = instances.FindLast (i => i.name == id);
-			if (go != null)
-				return go;
-
-			var unit = Array.FindLast (units, u => u.prototype.name == id);
-			if (unit != null)
-				return CreateInstance (unit.prototype);
-
-			return GameObject.CreatePrimitive (PrimitiveType.Cylinder);
-		}
 
         public void Retrieve(GameObject instance)
         {
-            instances.Add(ResetInstance(instance));
+			_builder.SetInstance (instance)
+					.SetParentAndHide (this.transform);
+
+			_instances.Add (_builder.Build ());
         }
     }
 }

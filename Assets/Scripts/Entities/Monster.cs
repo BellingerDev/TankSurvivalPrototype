@@ -30,6 +30,7 @@ namespace iLogos.TankSurvival
                 Vector3 tankPosition = Game.Instance.ActiveTank.transform.position;
 
                 _agent.SetDestination(tankPosition);
+				_agent.speed = _moveSpeed;
                 this.transform.LookAt(tankPosition);
             }
         }

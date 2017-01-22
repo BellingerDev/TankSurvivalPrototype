@@ -31,7 +31,7 @@ namespace iLogos.TankSurvival
 
         protected virtual AbstractBullet CreateBulletIntance(GameObject prototype)
         {
-            GameObject instance = Instantiate<GameObject>(prototype, Vector3.zero, Quaternion.identity);
+			GameObject instance = Pool.Instance.Get (prototype);
 
             instance.transform.SetParent(null);
             instance.SetActive(true);
