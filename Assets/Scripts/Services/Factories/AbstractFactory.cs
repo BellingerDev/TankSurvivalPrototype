@@ -20,5 +20,11 @@ namespace iLogos.TankSurvival
             foreach(Transform child in this.transform)
                 child.GetComponent<AbstractEntity>().DestroyInstance();
         }
+
+		public virtual void ClearFactory()
+		{
+			foreach (Transform child in this.transform)
+				child.GetComponent<AbstractEntity> ().DestroyInstance ();
+		}
     }
 }

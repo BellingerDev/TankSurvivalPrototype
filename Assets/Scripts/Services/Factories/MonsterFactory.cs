@@ -9,8 +9,6 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private GameObject _monsterPrototype;
 
-        private List<Monster> _spawnedMonsters = new List<Monster>();
-
 
         public void SpawnMonsterAtRandomPosition()
         {

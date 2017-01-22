@@ -37,7 +37,7 @@ namespace iLogos.TankSurvival
 
 		private void QuitGame ()
 		{
-			Application.Quit();
+			Game.Instance.Quit ();
 		}
     }
 }

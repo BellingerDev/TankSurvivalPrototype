@@ -10,10 +10,13 @@ namespace iLogos.TankSurvival
             Monster.OnDestroyedEvent += SpawnOneMoreMonster;
             Tank.OnDestroyedEvent += SwitchStateToGameOver;
 
-            Game.Instance.MonsterFactory.SpawnLevelMonsters();
+			Game.Instance.TankFactory.ClearFactory ();
+			Game.Instance.MonsterFactory.ClearFactory ();
 
             Tank tank = Game.Instance.TankFactory.SpawnTankAtPosition(Vector3.zero);
             Game.Instance.ActiveTank = tank;
+
+			Game.Instance.MonsterFactory.SpawnLevelMonsters();
         }
 
         public override void Update()

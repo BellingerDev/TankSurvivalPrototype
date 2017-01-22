@@ -97,6 +97,12 @@ namespace iLogos.TankSurvival
 			SaveProgress ();
 		}
 
+		public void Quit()
+		{
+			SaveProgress ();
+			Application.Quit ();
+		}
+
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.green;

@@ -7,7 +7,9 @@ namespace iLogos.TankSurvival
     {
         public override void Prepare()
         {
-            GameOverPresenter.OnRestartClickedEvent += SwitchStateToGameplay;
+            GameOverPresenter.OnRestartClickedEvent += RestartGame;
+			GameOverPresenter.OnMainMenuClickedEvent += SwitchToMainMenu;
+			GameOverPresenter.OnQuitClickedEvent += QuitGame;
         }
 
         public override void Update()
@@ -17,12 +19,24 @@ namespace iLogos.TankSurvival
 
         public override void Finish()
         {
-            GameOverPresenter.OnRestartClickedEvent -= SwitchStateToGameplay;
+            GameOverPresenter.OnRestartClickedEvent -= RestartGame;
+			GameOverPresenter.OnMainMenuClickedEvent -= SwitchToMainMenu;
+			GameOverPresenter.OnQuitClickedEvent -= QuitGame;
         }
 
-        private void SwitchStateToGameplay()
+        private void RestartGame()
         {
             Game.Instance.SwitchState(new GameplayState());
         }
+
+		private void SwitchToMainMenu ()
+		{
+			Game.Instance.SwitchState (new MainMenuState ());
+		}
+
+		private void QuitGame ()
+		{
+			Game.Instance.Quit ();
+		}
     }
 }
