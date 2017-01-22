@@ -21,7 +21,19 @@ namespace iLogos.TankSurvival
 
         public override void Update()
         {
-            
+            Tank tank = Game.Instance.ActiveTank;
+
+            Vector3 tankPos = tank.transform.position;
+            Vector3 arenaSize = Game.Instance.Balance.ArenaSize;
+
+            float levelDistance = arenaSize.magnitude;
+            float tankDistance = tankPos.magnitude;
+
+            if(tankDistance > levelDistance)
+            {
+                tank.LinearVelocity = -tank.LinearVelocity;
+                tank.CalculateLocation();
+            }
         }
 
         public override void Finish()

@@ -40,6 +40,13 @@ namespace iLogos.TankSurvival
 
         protected override void Update()
         {
+            CalculateLocation();
+        }
+
+        #endregion
+
+        public void CalculateLocation()
+        {
             Vector3 tankPosition = this.transform.position;
             Vector3 tankForward = this.transform.forward;
 
@@ -55,8 +62,6 @@ namespace iLogos.TankSurvival
 
             _headTransform.rotation = tankHeadRotation;
         }
-
-        #endregion
 
         public override void ObtainDamage(AbstractEntity otherEntity)
         {

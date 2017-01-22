@@ -106,7 +106,8 @@ namespace iLogos.TankSurvival
 		private void OnDrawGizmos()
 		{
 			Gizmos.color = Color.green;
-			Gizmos.DrawWireCube(Vector3.zero, new Vector3(_balance.ArenaSize.x*2, 2, _balance.ArenaSize.y*2));
+            //Gizmos.DrawWireCube(Vector3.zero, new Vector3(_balance.ArenaSize.x*2, 2, _balance.ArenaSize.y*2));
+            Gizmos.DrawWireSphere(this.transform.position, _balance.ArenaSize.magnitude);
 		}
 
 		public GameBalance Balance
