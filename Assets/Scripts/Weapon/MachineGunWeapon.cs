@@ -18,7 +18,7 @@ namespace iLogos.TankSurvival
         private WeaponSlot[] _slots;
 
 
-        protected override void ShotBulletAtLocation(GameObject prototype, float damage)
+        protected override void ShotBulletAtLocation(GameObject prototype, int damage)
         {
                         
             Vector3 bulletVelocity = _slots[_activeSlot].transform.forward * _bulletSpeed;

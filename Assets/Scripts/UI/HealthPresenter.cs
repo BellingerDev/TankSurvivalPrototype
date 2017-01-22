@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace iLogos.TankSurvival
 {
-	public class HealthIndicator : MonoBehaviour 
+	public class HealthPresenter : AbstractPresenter
 	{
 		[SerializeField]
 		private Image _progressImage;
 
 		private AbstractEntity _entity;
 		private Vector3 _offset;
-		Quaternion _angle;
+		private Quaternion _angle;
+
 
 		private void Awake()
 		{
@@ -22,7 +24,7 @@ namespace iLogos.TankSurvival
 
 		private void Update()
 		{
-			_progressImage.fillAmount = _entity.CurrentHealth / _entity.Health;
+			_progressImage.fillAmount = (float)_entity.CurrentHealth / (float)_entity.TotalHealth;
 
 			this.transform.position = _entity.transform.position + _offset;
 			this.transform.rotation = _angle;

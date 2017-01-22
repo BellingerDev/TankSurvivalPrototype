@@ -2,7 +2,7 @@ namespace iLogos.TankSurvival
 {
     public class MachineGunBullet : AbstractBullet
     {
-        public override float ReceiveDamage()
+        public override int ReceiveDamage()
         {
             DestroyInstance();
 

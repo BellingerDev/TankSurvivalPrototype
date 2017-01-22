@@ -15,7 +15,7 @@ namespace iLogos.TankSurvival
         private WeaponSlot _weaponSlot;
 
 
-        protected override void ShotBulletAtLocation(GameObject prototype, float damage)
+        protected override void ShotBulletAtLocation(GameObject prototype, int damage)
         {
             if (_weaponSlot != null)
             {

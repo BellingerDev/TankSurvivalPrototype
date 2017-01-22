@@ -20,12 +20,12 @@ namespace iLogos.TankSurvival
 
 		[SerializeField]
 		private float _rotateSpeed;
-
-        private WeaponController _weapon;
         
 		public float LinearVelocity { get; set; }
 		public Quaternion AngularVelocity { get; set; }
-        public Quaternion HeadAngularVelocity { get; set; }
+		public Quaternion HeadAngularVelocity { get; set; }
+
+		public WeaponController Weapon { get; private set; }
 
 
         #region MonoBehaviour Callbacks
@@ -33,7 +33,7 @@ namespace iLogos.TankSurvival
         protected override void Awake()
         {
             base.Awake();
-            _weapon = GetComponent<WeaponController>();
+            Weapon = GetComponent<WeaponController>();
         }
 
         protected override void Update()
@@ -65,7 +65,7 @@ namespace iLogos.TankSurvival
 
         public override void ObtainDamage(AbstractBullet bullet)
         {
-            
+            // override this for skip damage from bullets
         }
 
         public override void ResetInstance()
@@ -81,11 +81,6 @@ namespace iLogos.TankSurvival
         {
             base.DestroyInstance();
             OnDestroyedEvent();
-        }
-
-        public WeaponController Weapon
-        {
-            get { return _weapon; }
         }
     }
 }

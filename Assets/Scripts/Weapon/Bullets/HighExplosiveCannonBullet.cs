@@ -11,12 +11,15 @@ namespace iLogos.TankSurvival
         private int _currentTargetCount;
 
 
-        public override float ReceiveDamage()
+        public override int ReceiveDamage()
         {
-            if (_currentTargetCount >= _maxTargets)
+            if (_currentTargetCount <= _maxTargets)
                 _currentTargetCount++;
             else
-                DestroyInstance();
+			{
+				DestroyInstance();
+				return 0;
+			}
 
             return Damage;
         }

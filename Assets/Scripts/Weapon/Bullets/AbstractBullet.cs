@@ -5,11 +5,11 @@ namespace iLogos.TankSurvival
 {
     public abstract class AbstractBullet : MonoBehaviour, IPoolable
     {
-        public float Damage { get; private set; }
+        public int Damage { get; private set; }
         public Vector3 Velocity { get; private set; }
 
 
-        public void Configure(float damage, Vector3 velocity)
+        public void Configure(int damage, Vector3 velocity)
         {
             Damage = damage;
             Velocity = velocity;
@@ -19,8 +19,6 @@ namespace iLogos.TankSurvival
         {
             this.transform.position += Velocity;
         }
-
-        public abstract float ReceiveDamage();
 
         public virtual void ResetInstance()
         {
@@ -32,5 +30,7 @@ namespace iLogos.TankSurvival
         {
             Pool.Instance.Retrieve(this.gameObject);
         }
+
+		public abstract int ReceiveDamage();
     }
 }

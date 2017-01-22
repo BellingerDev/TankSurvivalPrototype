@@ -11,7 +11,7 @@ namespace iLogos.TankSurvival
         private int _currentPiercing;
 
 
-        public override float ReceiveDamage()
+        public override int ReceiveDamage()
         {
             if (--_currentPiercing <= 0)
                 DestroyInstance();
@@ -26,7 +26,7 @@ namespace iLogos.TankSurvival
             _currentPiercing = _piercing;
         }
 
-        public int Piercing
+        public int TotalPiercing
         {
             get { return _piercing; }
         }

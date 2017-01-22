@@ -6,17 +6,20 @@ namespace iLogos.TankSurvival
 	public abstract class AbstractEntity : MonoBehaviour, IPoolable
 	{
 		[SerializeField]
-		protected float _health;
+		protected int _health;
 
 		[SerializeField]
 		[RangeAttribute(0, 1)]
 		protected float _defence;
 
 		[SerializeField]
-		protected float _damage;
+		protected int _damage;
 
-
+		public float TotalHealth { get { return _health; } }
 		public float CurrentHealth { get; private set; }
+
+		public float TotalDamage { get { return _damage; } }
+		public float TotalDefence { get { return _defence; } }
 
 
 		#region MonoBehaviour Callbacks
@@ -46,7 +49,7 @@ namespace iLogos.TankSurvival
 
 		public virtual void ObtainDamage(AbstractEntity otherEntity)
 		{
-			CurrentHealth -= otherEntity.Damage * otherEntity.Defence;
+			CurrentHealth -= (float)otherEntity.TotalDamage * otherEntity.TotalDefence;
 
 			if (CurrentHealth <= 0)
 				DestroyInstance();
@@ -54,7 +57,7 @@ namespace iLogos.TankSurvival
 
 		public virtual void ObtainDamage(AbstractBullet bullet)
 		{
-			CurrentHealth -= bullet.ReceiveDamage() / Defence;
+			CurrentHealth -= (float)bullet.ReceiveDamage() / _defence;
 
 			if (CurrentHealth <= 0)
 				DestroyInstance();
@@ -69,27 +72,12 @@ namespace iLogos.TankSurvival
 
 		public virtual void ResetInstance()
 		{
-			CurrentHealth = Health;
+			CurrentHealth = TotalHealth;
 		}
 
 		public virtual void DestroyInstance()
 		{
 			Pool.Instance.Retrieve(this.gameObject);
-		}
-
-		public float Health
-		{
-			get { return _health; }
-		}
-
-		public float Defence
-		{
-			get { return _defence; }
-		}
-
-		public float Damage
-		{
-			get { return _damage; }
 		}
 	}
 }

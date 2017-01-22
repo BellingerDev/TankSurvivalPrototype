@@ -15,7 +15,7 @@ namespace iLogos.TankSurvival
         private float _reloadTime;
 
         [SerializeField]
-        private float _damage;
+        private int _damage;
 
         private float _endReloadTime;
 
@@ -45,6 +45,6 @@ namespace iLogos.TankSurvival
 		}
         
         public abstract void Configure(WeaponSlot[] _slots);
-        protected abstract void ShotBulletAtLocation(GameObject prototype, float damage);
+        protected abstract void ShotBulletAtLocation(GameObject prototype, int damage);
     }
 }
