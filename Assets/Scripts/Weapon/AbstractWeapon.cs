@@ -5,6 +5,9 @@ namespace iLogos.TankSurvival
 {
     public abstract class AbstractWeapon : MonoBehaviour
     {
+		[SerializeField]
+		private string _id;
+
         [SerializeField]
         private GameObject _bulletPrototype;
 
@@ -26,8 +29,6 @@ namespace iLogos.TankSurvival
             }
         }
 
-        protected abstract void ShotBulletAtLocation(GameObject prototype, float damage);
-
         protected virtual AbstractBullet CreateBulletIntance(GameObject prototype)
         {
             GameObject instance = Instantiate<GameObject>(prototype, Vector3.zero, Quaternion.identity);
@@ -37,7 +38,13 @@ namespace iLogos.TankSurvival
 
             return instance.GetComponent<AbstractBullet>();
         }
+
+		public string Id
+		{
+			get { return _id; }
+		}
         
         public abstract void Configure(WeaponSlot[] _slots);
+        protected abstract void ShotBulletAtLocation(GameObject prototype, float damage);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace iLogos.TankSurvival
 {
     [RequireComponent(typeof(WeaponController))]
-    public class Tank : AbstractEntity
+    public class Tank : AbstractEntity, IPoolable
     {
         public static event Action OnDestroyedEvent = delegate { };
         
@@ -58,7 +58,9 @@ namespace iLogos.TankSurvival
         public override void ObtainDamage(AbstractEntity otherEntity)
         {
             base.ObtainDamage(otherEntity);
-            otherEntity.DestroyInstance();
+
+            if (otherEntity is Monster)
+                otherEntity.DestroyInstance();
         }
 
         public override void ObtainDamage(AbstractBullet bullet)
@@ -66,13 +68,19 @@ namespace iLogos.TankSurvival
             
         }
 
+        public override void ResetInstance()
+        {
+            base.ResetInstance();
+
+            LinearVelocity = 0.0f;
+            AngularVelocity = Quaternion.identity;
+            HeadAngularVelocity = Quaternion.identity;
+        }
+
         public override void DestroyInstance()
         {
-            this.gameObject.SetActive(false);
-
+            base.DestroyInstance();
             OnDestroyedEvent();
-
-            Destroy(this.gameObject);
         }
 
         public WeaponController Weapon

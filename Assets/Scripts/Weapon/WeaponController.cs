@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,10 @@ namespace iLogos.TankSurvival
 {
     public class WeaponController : MonoBehaviour
     {        
+        public event Action OnWeaponAddedEvent = delegate { };
+        public event Action OnWeaponRemovedEvent = delegate { };
+        public event Action OnActiveWeaponChangedEvent = delegate { };
+
         [SerializeField]
         private WeaponSlot[] _slots;
 
@@ -22,7 +27,7 @@ namespace iLogos.TankSurvival
         public void SwitchWeapon(AbstractWeapon weapon)
         {
             _activeWeapon = weapon;
-            Debug.Log("Weapon Switched TO : " + weapon.GetType());
+            OnActiveWeaponChangedEvent();
         }
 
         public void SwitchNextWeapon()
@@ -51,13 +56,32 @@ namespace iLogos.TankSurvival
             weapon.Configure(_slots);
 
             _availableWeapon.Add(weapon);
-
             _activeWeapon = weapon;
+
+            OnWeaponAddedEvent();
+        }
+
+        public void RemoveWeapon(AbstractWeapon weapon)
+        {
+            _availableWeapon.Remove(weapon);
+            Destroy(weapon.gameObject);
+
+            OnWeaponRemovedEvent();
         }
 
         public IEnumerable<AbstractWeapon> AvailableWeapon
         {
             get { return _availableWeapon; }
+        }
+
+        public int WeaponCount
+        {
+            get { return _availableWeapon.Count; }
+        }
+
+        public AbstractWeapon ActiveWeapon
+        {
+            get { return _activeWeapon; }
         }
     }
 }

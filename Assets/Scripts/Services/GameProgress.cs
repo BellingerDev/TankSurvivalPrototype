@@ -12,6 +12,9 @@ namespace iLogos.TankSurvival
 		[SerializeField]
 		private int _totalDestroyedMonsters;
 
+		[SerializeField]
+		private int _saveVersion = 0;
+
 
 		public int TotalDestroyedMonsters
 		{
@@ -20,6 +23,15 @@ namespace iLogos.TankSurvival
 			{
 				_totalDestroyedMonsters = value;
 				OnTotalDestroyedMonstersChangedEvent();
+			}
+		}
+
+		public int SaveVersion
+		{
+			get { return _saveVersion; }
+			set 
+			{
+				_saveVersion = value;
 			}
 		}
 	}

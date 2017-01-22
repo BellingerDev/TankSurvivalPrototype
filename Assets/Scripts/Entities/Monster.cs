@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace iLogos.TankSurvival
@@ -11,26 +12,24 @@ namespace iLogos.TankSurvival
         [SerializeField]
         private float _moveSpeed;
 
+        private NavMeshAgent _agent;
+
 
         #region MonoBehaviour Callbacks
 
         protected override void Awake()
         {
             base.Awake();
+            _agent = GetComponent<NavMeshAgent>();
         }
 
         protected override void Update()
         {
             if (Game.Instance.ActiveTank != null)
             {
-                Vector3 position = this.transform.position;
-
                 Vector3 tankPosition = Game.Instance.ActiveTank.transform.position;
 
-                position = Vector3.MoveTowards(position, tankPosition, Time.deltaTime * _moveSpeed);
-
-
-                this.transform.position = position;
+                _agent.SetDestination(tankPosition);
                 this.transform.LookAt(tankPosition);
             }
         }
@@ -39,11 +38,8 @@ namespace iLogos.TankSurvival
 
         public override void DestroyInstance()
         {
-            this.gameObject.SetActive(false);
-
+            base.DestroyInstance();
             OnDestroyedEvent();
-
-            Destroy(this.gameObject);
         }
     }
 }

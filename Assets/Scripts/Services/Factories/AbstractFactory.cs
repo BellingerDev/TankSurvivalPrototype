@@ -7,7 +7,7 @@ namespace iLogos.TankSurvival
     {
         protected T CreateInstance<T>(GameObject prototype)
         {
-            GameObject instance = Instantiate(prototype, Vector3.zero, Quaternion.identity);
+            GameObject instance = Pool.Instance.Get(prototype);
 
             instance.transform.SetParent(this.transform);
             instance.SetActive(true);

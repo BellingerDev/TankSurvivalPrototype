@@ -1,10 +1,15 @@
-﻿namespace iLogos.TankSurvival
+﻿using UnityEngine;
+
+
+namespace iLogos.TankSurvival
 {
     public class MainMenuState : AbstractGameState
     {
         public override void Prepare()
         {
-            MainMenuPresenter.OnPlayClickedEvent += SwitchStateToGameplay;
+            MainMenuPresenter.OnPlayClickedEvent += StartNewGame;
+			MainMenuPresenter.OnContinueClickedEvent += ContinueGame;
+			MainMenuPresenter.OnQuitClickedEvent += QuitGame;
         }
 
         public override void Update()
@@ -14,12 +19,25 @@
 
         public override void Finish()
         {
-            MainMenuPresenter.OnPlayClickedEvent -= SwitchStateToGameplay;
+			MainMenuPresenter.OnPlayClickedEvent -= StartNewGame;
+			MainMenuPresenter.OnContinueClickedEvent -= ContinueGame;
+			MainMenuPresenter.OnQuitClickedEvent -= QuitGame;
         }
 
-        private void SwitchStateToGameplay()
-        {
-            Game.Instance.SwitchState(new GameplayState());
-        }
+		private void StartNewGame ()
+		{
+			Game.Instance.ResetProgress ();
+			Game.Instance.SwitchState(new GameplayState());
+		}
+
+		private void ContinueGame ()
+		{
+			Game.Instance.SwitchState(new GameplayState());
+		}
+
+		private void QuitGame ()
+		{
+			Application.Quit();
+		}
     }
 }

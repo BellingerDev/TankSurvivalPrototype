@@ -3,7 +3,7 @@
 
 namespace iLogos.TankSurvival
 {
-	public abstract class AbstractEntity : MonoBehaviour 
+	public abstract class AbstractEntity : MonoBehaviour, IPoolable
 	{
 		[SerializeField]
 		protected float _health;
@@ -15,6 +15,7 @@ namespace iLogos.TankSurvival
 		[SerializeField]
 		protected float _damage;
 
+
 		public float CurrentHealth { get; private set; }
 
 
@@ -22,10 +23,13 @@ namespace iLogos.TankSurvival
 
 		protected virtual void Awake()
 		{
-			CurrentHealth = Health;
+
 		}
 
-		protected abstract void Update();
+		protected virtual void Update()
+		{
+
+		}
 
 		private void OnTriggerEnter(Collider col)
 		{
@@ -63,7 +67,15 @@ namespace iLogos.TankSurvival
 			Gizmos.DrawRay(this.transform.position, this.transform.forward);
 		}
 
-		public abstract void DestroyInstance();
+		public virtual void ResetInstance()
+		{
+			CurrentHealth = Health;
+		}
+
+		public virtual void DestroyInstance()
+		{
+			Pool.Instance.Retrieve(this.gameObject);
+		}
 
 		public float Health
 		{

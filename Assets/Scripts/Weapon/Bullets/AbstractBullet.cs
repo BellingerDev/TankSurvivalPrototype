@@ -1,13 +1,10 @@
-using System;
 using UnityEngine;
 
 
 namespace iLogos.TankSurvival
 {
-    public abstract class AbstractBullet : MonoBehaviour
+    public abstract class AbstractBullet : MonoBehaviour, IPoolable
     {
-        public event Action OnDestroyedEvent = delegate { };
-
         public float Damage { get; private set; }
         public Vector3 Velocity { get; private set; }
 
@@ -25,10 +22,15 @@ namespace iLogos.TankSurvival
 
         public abstract float ReceiveDamage();
 
-        protected virtual void DestroyInstance()
+        public virtual void ResetInstance()
         {
-            OnDestroyedEvent();
-            Destroy(this.gameObject);
+            Damage = 0;
+            Velocity = Vector3.zero;
+        }
+
+        public virtual void DestroyInstance()
+        {
+            Pool.Instance.Retrieve(this.gameObject);
         }
     }
 }

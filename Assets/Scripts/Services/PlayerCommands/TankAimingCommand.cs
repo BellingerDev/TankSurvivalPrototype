@@ -9,6 +9,9 @@ namespace iLogos.TankSurvival
     {
         public static event Action<Vector3> OnAimHandleEvent = delegate { };
 
+		[SerializeField]
+		private bool _isEnabled;
+
         private Vector3 _aimPosition;
 
 
@@ -28,7 +31,8 @@ namespace iLogos.TankSurvival
 
         public override void Execute(Tank tank)
         {
-            tank.HeadAngularVelocity = Quaternion.LookRotation(_aimPosition);
+			if (_isEnabled)
+            	tank.HeadAngularVelocity = Quaternion.LookRotation(_aimPosition);
         }
     }
 }

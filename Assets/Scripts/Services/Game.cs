@@ -87,7 +87,14 @@ namespace iLogos.TankSurvival
 
 		private void SaveProgress()
 		{
+			Progress.SaveVersion++;
 			PlayerPrefs.SetString(_saveName, JsonUtility.ToJson(_progress));
+		}
+
+		public void ResetProgress()
+		{
+			_progress = new GameProgress ();
+			SaveProgress ();
 		}
 
 		private void OnDrawGizmos()
