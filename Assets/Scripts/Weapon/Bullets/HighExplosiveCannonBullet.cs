@@ -23,7 +23,7 @@ namespace iLogos.TankSurvival
 				return 0;
 			}
 
-            return Damage;
+            return Damage * _currentTargetCount;
         }
 
         public override void ResetInstance()

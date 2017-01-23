@@ -17,6 +17,8 @@ namespace iLogos.TankSurvival
             Game.Instance.ActiveTank = tank;
 
 			Game.Instance.MonsterFactory.SpawnLevelMonsters();
+
+            AttachCameraToTank();
         }
 
         public override void Update()
@@ -45,6 +47,13 @@ namespace iLogos.TankSurvival
             Game.Instance.ActiveTank = null;
             
             Game.Instance.MonsterFactory.DestroyInstances();
+        }
+
+        private void AttachCameraToTank()
+        {
+            FollowTarget follow = Camera.main.GetComponent<FollowTarget>();
+            if (follow != null)
+                follow.Target = Game.Instance.ActiveTank.gameObject;
         }
 
         private void SwitchStateToGameOver()
