@@ -28,6 +28,7 @@ namespace iLogos.TankSurvival
 		public Quaternion HeadAngularVelocity { get; set; }
 
 		public WeaponController Weapon { get; private set; }
+        public BoxCollider Collider { get; private set; }
 
 
         #region MonoBehaviour Callbacks
@@ -36,6 +37,7 @@ namespace iLogos.TankSurvival
         {
             base.Awake();
             Weapon = GetComponent<WeaponController>();
+            Collider = GetComponent<BoxCollider>();
         }
 
         protected override void Update()
